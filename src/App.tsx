@@ -2,8 +2,10 @@ import { Component, createEffect } from 'solid-js';
 import logo from './logo.svg';
 import styles from './App.module.css';
 
-import model from './model';
-console.log(model)
+//import model from './model';
+//console.log(model)
+//model is an Iterable type
+//tensorflow-specific type
 
 //TODO: find way to display model
 
