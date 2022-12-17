@@ -1,42 +1,21 @@
 import { Component, createEffect } from 'solid-js';
 import styles from './App.module.css';
 import getStyledImage from './model';
-import * as tf from '@tensorflow/tfjs';
+import { Canvas } from './Canvas';
 
 // will change if we deploy to Heroku, Github pages, etc...
 const image = "http://localhost:3000/src/assets/image.jpg"
 const styleImage = "http://localhost:3000/src/assets/style_transfer_image.jpg"
 
-// TODO: find less janky way to display model
-// the whole point of a framework is to not
-// have to use document.getElementById()
-// see if we can avoid importing tensorflow in this folder
-//TODO: have as a component w/ conditional render
-let styledIm = null;
-
 const styledImage = async () => {
   await getStyledImage(styleImage, image)
     .then(result => {
-      let canvas = document.getElementById("styledImage");
-      // renders, but TypeScript is not happy
-      tf.browser.toPixels(result, canvas);
+      console.log(result);
     });
+
 }
 
-//doing components
-// const ImageInput: Component = (...props) => {
-//   const stuff = "thing";
-//   return(
-//     <div>
-//       {stuff}
-//       <input />
-//     </div>
-//   );
-// };
-//does solid.js have props?
-//<ImageInput thing={props.thing} thing2={props.thing2}/>
-
-//TODO: once model working, wrap execution of model in a button "Generate Image"
+//TODO: make the styling look good
 //TODO: button working, have 3-4 styleImages in a sidebar to choose from
 //TODO: button working, have an <input> to upload image
 //TODO: finally, have button to download image
@@ -44,16 +23,19 @@ const styledImage = async () => {
 
 const App: Component = () => {
   return (
-    <div class={styles.App}>
+    <div>
+    {/*<div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">*/}
       <header class={styles.header}>
-        {/*<img src={logo} class={styles.logo} alt="logo" />*/}
-        <img src={image} />
-        <img src={styleImage} />
+        {/* Left Col */}
+        <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
+          <img src={image} width={500} height={500} />
+        </div>
+        {/* Right Col */}
+        <div class="flex flex-col w-full xl:w-3/5 p-12 overflow-hidden">
+          <img src={styleImage} width={500} height={500} />
+        </div>
         <button onClick={styledImage}>Generate Styled Image!</button>
-        <canvas id="styledImage"/>
-        <p class="text-4xl text-red-400 tracking-widest">
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Canvas />
       </header>
     </div>
   );

@@ -1,5 +1,6 @@
 //const tf = require('@tensorflow/tfjs');
 import * as tf from '@tensorflow/tfjs'
+import { getCanvas } from './Canvas'
 
 // TODO: how to use tensorflowjs without massive memory leaks:
 // https://levelup.gitconnected.com/how-to-use-tensorflow-js-without-memory-leaks-273ad16196be
@@ -20,6 +21,7 @@ import * as tf from '@tensorflow/tfjs'
 const modelURL = 'http://localhost:3000/src/models/model.json';
 
 const getStyledImage = async (styleImgURL: string, imgURL: string) => {
+    console.log('running model...')
 
     const model = await tf.loadGraphModel(modelURL);
 
@@ -39,7 +41,14 @@ const getStyledImage = async (styleImgURL: string, imgURL: string) => {
     //Typescript not happy but seems to work. returns a tensor of rank 3
     result = tf.squeeze(result);
 
-    return result
+    console.log('style transfer completed')
+
+    //Typescript not happy
+    tf.browser.toPixels(result, getCanvas());
+
+    const completedMsg = 'image completed';
+
+    return completedMsg
 }
 
 function preprocess(imgData: HTMLImageElement | tf.PixelData | ImageData | HTMLCanvasElement | HTMLVideoElement | ImageBitmap) {
@@ -57,10 +66,5 @@ function preprocess(imgData: HTMLImageElement | tf.PixelData | ImageData | HTMLC
 	return batched;
 
 }
-
-// maybe export a Component?
-// and then do conditional rendering in App.tsx
-// we should be able to eliminate having to import tf
-// in App.tsx
 
 export default getStyledImage;
