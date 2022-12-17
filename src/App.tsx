@@ -5,13 +5,22 @@ import { Canvas } from './Canvas';
 
 // will change if we deploy to Heroku, Github pages, etc...
 const image = "http://localhost:3000/src/assets/image.jpg"
+const hiddenImage = "http://localhost:3000/src/assets/spengbab.jpg"
 const styleImage = "http://localhost:3000/src/assets/style_transfer_image.jpg"
-//const styledImageId = "styledImage";
+
+// for some reason if we don't have the hiddenImage in the 
+// app, tf.browser.toPixels() just displays a gray screen
+// so we need to have the image in the App Component
+// but set the display to 'hidden'
 
 const [canvasDisplayed, setCanvasDisplayed] = createSignal(false);
+const [buttonPressed, setButtonPressed] = createSignal(false);
 
 const styledImage = async () => {
-  await getStyledImage(styleImage, image)
+
+  setButtonPressed(true);
+
+  await getStyledImage(styleImage, hiddenImage)
     .then(result => {
       console.log(result);
     });
@@ -43,11 +52,17 @@ const App: Component = () => {
           <div class="flex flex-col w-full xl:w-1/4 justify-center lg:items-start">
             <img src={styleImage} width={500} height={500} />
           </div>
-          <div class="pt-6 pb-6">
-            <button class="p-2 rounded-lg border-2 border-radius border-gray-200 bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300" onClick={styledImage}>Generate Vibe!</button>
+          <div class="invisible">
+            <img src={hiddenImage} width={5} height={5} />
           </div>
+          <div class="pt-6 pb-6">
+            <button class="p-2 rounded-md border-radius bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300" 
+              onClick={styledImage}>Generate Vibe!</button>
+          </div>
+          {buttonPressed() && !canvasDisplayed() ? <p>Loading...</p> : ''}
+          {canvasDisplayed() ? <p> you have failed the vibe check. </p> : ''}
           <Canvas />
-          {canvasDisplayed() ? <p> you have failed the vibe check. prepare to be assimilated.</p> : ''}
+          {canvasDisplayed() ? <p> he comes. </p> : ''}
       </header>
     </div>
   );

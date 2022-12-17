@@ -25,11 +25,11 @@ const getStyledImage = async (styleImgURL: string, imgURL: string) => {
 
     const model = await tf.loadGraphModel(modelURL);
 
-    const image = new Image(250, 250); // need image size small or will crash
-    image.src = imgURL;
+    const image = new Image(240, 258); // need image size small or will crash
+    image.src = imgURL; 
     //image.onload = () => tf.browser.fromPixels(image);
     
-    const styleImage = new Image(500, 500);
+    const styleImage = new Image(250, 250);
     styleImage.src = styleImgURL;
     //styleImage.onload = () => tf.browser.fromPixels(image);
 
