@@ -1,28 +1,66 @@
 //const tf = require('@tensorflow/tfjs');
 import * as tf from '@tensorflow/tfjs'
 
+// TODO: how to use tensorflowjs without massive memory leaks:
+// https://levelup.gitconnected.com/how-to-use-tensorflow-js-without-memory-leaks-273ad16196be
+// backend_webgl.ts:1211 High memory usage in GPU: 2614.45 MB, most likely due to a memory leak
+
 // Optional Load the binding:
 // Use '@tensorflow/tfjs-node-gpu' if running with GPU.
-// @tensorflw/tfjs-node causes errors or aws-sdk, aws-s3, nock
+// @tensorflw/tfjs-node causes errors or aws-sdk, aws-s3, nock - I think this is specifically for backend
 // require('@tensorflow/tfjs-node');
 
-// Train a simple model:
-const model = tf.sequential();
-model.add(tf.layers.dense({units: 100, activation: 'relu', inputShape: [10]}));
-model.add(tf.layers.dense({units: 1, activation: 'linear'}));
-model.compile({optimizer: 'sgd', loss: 'meanSquaredError'});
 
-const xs = tf.randomNormal([100, 10]);
-const ys = tf.randomNormal([100, 1]);
+// console.log(import.meta.env) // solid.js equivalent of process env
+// console.log(import.meta.url)
+// if we deploy this we'll need to change the url most likely
+// TODO: do a check for import.meta.env.DEV || import.meta.env.PROD 
+// and set environment variables for the URL based on where we deploy
+// if in dev or deployed to Heroku, Github pages, etc...
+const modelURL = 'http://localhost:3000/src/models/model.json';
 
-model.fit(xs, ys, {
-  epochs: 100,
-  callbacks: {
-    // warning for implicit types
-    // epoch: void, log: { loss: void; }
-    // warning: log is possibly undefined
-    onEpochEnd: (epoch, log) => console.log(`Epoch ${epoch}: loss = ${log?.loss ?? 0.0}`)
-  }
-});
+const getStyledImage = async (styleImgURL: string, imgURL: string) => {
 
-export default model;
+    const model = await tf.loadGraphModel(modelURL);
+
+    const image = new Image(250, 250); // need image size small or will crash
+    image.src = imgURL;
+    //image.onload = () => tf.browser.fromPixels(image);
+    
+    const styleImage = new Image(500, 500);
+    styleImage.src = styleImgURL;
+    //styleImage.onload = () => tf.browser.fromPixels(image);
+
+    const imageTensor = preprocess(image);
+    const styleImageTensor = preprocess(styleImage);
+
+    let result = model.execute([styleImageTensor, imageTensor]);
+
+    //Typescript not happy but seems to work. returns a tensor of rank 3
+    result = tf.squeeze(result);
+
+    return result
+}
+
+function preprocess(imgData: HTMLImageElement | tf.PixelData | ImageData | HTMLCanvasElement | HTMLVideoElement | ImageBitmap) {
+
+	let imgTensor = tf.browser.fromPixels(imgData)
+
+	//image has 3 channels (0, 255) - need to normalize (0, 1)
+	const offset = tf.scalar(255.0);
+	const normalized = tf.scalar(1.0).sub(imgTensor.div(offset));
+
+	// model expects an array of tensors 
+	// create an array containing 1 4-d tensor
+	const batched = normalized.expandDims(0);
+
+	return batched;
+
+}
+
+// maybe export a Component?
+// and then do conditional rendering in App.tsx
+// we should be able to eliminate having to import tf
+// in App.tsx
+
+export default getStyledImage;
