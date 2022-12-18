@@ -1,12 +1,8 @@
 import { Component } from "solid-js";
 
-//TODO: pass id as props without getting 
-//TypeScript errors
-const id = "styledImage";
+export const Canvas: Component<{id: string}> = (props) => <canvas id={props.id}/>;
 
-export const Canvas: Component = () => <canvas id={id}/>;
-
-export const getCanvas = () => {
+export const getCanvas = (id: string) => {
     const canvas = document.getElementById(id);
  return canvas;
 }

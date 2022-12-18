@@ -20,7 +20,7 @@ import { getCanvas } from './Canvas'
 // if in dev or deployed to Heroku, Github pages, etc...
 const modelURL = 'http://localhost:3000/src/models/model.json';
 
-const getStyledImage = async (styleImgURL: string, imgURL: string) => {
+const getStyledImage = async (styleImgURL: string, imgURL: string, styledId: string) => {
     console.log('running model...')
 
     const model = await tf.loadGraphModel(modelURL);
@@ -43,8 +43,8 @@ const getStyledImage = async (styleImgURL: string, imgURL: string) => {
 
     console.log('style transfer completed')
 
-    //Typescript not happy
-    tf.browser.toPixels(result, getCanvas());
+    //Typescript not happy with result
+    tf.browser.toPixels(result, getCanvas(styledId));
 
     const completedMsg = 'image completed';
 
