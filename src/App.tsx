@@ -60,10 +60,9 @@ const changeRImage = (imgIdx: number) => {
 
 //TODO: make the styling look good
 //TODO: button working, have 3-4 styleImages in a sidebar to choose from
-//TODO: button working, have an <input> to upload image
-//TODO: finally, have button to download image
-//TODO: option to share on social media?
-
+//TODO: button working, have an <input> to upload image - nah, we'll do it with full stack app
+//TODO: finally, have button to download image - maybe save for full stack
+//TODO: option to share on social media? - maybe save for full stack
 
 const App: Component = () => {
   return (
@@ -80,9 +79,6 @@ const App: Component = () => {
                 <div>
                   Choose your target image!
                   <Sidebar imgChange={changeLImage} />
-                  ...or upload an image instead
-                  <input 
-                    />
                 </div>
                 <div>
                   Choose your style image!
