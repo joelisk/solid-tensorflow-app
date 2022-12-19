@@ -45,21 +45,19 @@ const styledImage = async (id: string) => {
   setCanvasDisplayed(true);
 };
 
-const changeLImage = (imgIdx: number) => {
+const changeTgtImage = (imgIdx: number) => {
   setImage(imgUrlArr[imgIdx]);
 };
 
-const changeRImage = (imgIdx: number) => {
+const changeStyleImage = (imgIdx: number) => {
   setStyleImage(imgUrlArr[imgIdx]);
 };
 
-//TODO: make the styling look good
 //TODO: button working, have 3-4 styleImages in a sidebar to choose from
 
 const App: Component = () => {
   return (
     <div>
-      {/*<div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">*/}
       <header class="pr-2 pl-24 py-0 font-sans text-2xl text-violet-100 bg-gradient-to-b from-indigo-500 to-fuchsia-500">
         <div>
           <div class="px-4 py-2 container bg-gray-800">
@@ -68,7 +66,7 @@ const App: Component = () => {
             <div class="pb-6 columns-2 flex justify-evenly">
               <div class="text-sm">
                 Choose your target image!
-                <Sidebar imgChange={changeLImage} />
+                <Sidebar imgChange={changeTgtImage} />
               </div>
               <div>
                 <img
@@ -82,7 +80,7 @@ const App: Component = () => {
             <div class="pb-6 columns-2 flex justify-evenly">
               <div class="text-sm">
                 Choose your style image!
-                <Sidebar imgChange={changeRImage} />
+                <Sidebar imgChange={changeStyleImage} />
               </div>
               <div>
                 <img
