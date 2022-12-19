@@ -6,7 +6,7 @@
   "scripts": {
     "start": "vite",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d deploy",
+    "deploy": "gh-pages -d deploy.sh",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
