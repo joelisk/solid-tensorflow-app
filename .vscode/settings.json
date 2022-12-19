@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "javascript.format.semicolons": "insert",
+  "typescript.format.semicolons": "insert",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
