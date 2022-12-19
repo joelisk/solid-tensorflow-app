@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: true, // or 'media' or 'class'
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     // ends up overriding the entire Tailwind palate
     // colors:{
@@ -10,8 +9,5 @@ module.exports = {
     // },
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
   plugins: [],
-}
+};
