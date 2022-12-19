@@ -1,7 +1,9 @@
 import * as tf from "@tensorflow/tfjs";
 import { getCanvas } from "./Canvas";
 
-const BASE_URL = import.meta.env.DEV ? "http://localhost:3000" : ""; // wherever we deploy
+const BASE_URL = import.meta.env.PROD
+  ? "http://JoeLisk.github.io/solid-tensorflow-app"
+  : "http://localhost:3000";
 
 const modelURL = BASE_URL + "/src/models/model.json";
 

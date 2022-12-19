@@ -4,7 +4,9 @@ import { Canvas } from "./Canvas";
 
 const styledId = "styledImage";
 
-const BASE_URL = import.meta.env.DEV ? "http://localhost:3000" : ""; // wherever we deploy
+const BASE_URL = import.meta.env.PROD
+  ? "http://JoeLisk.github.io/solid-tensorflow-app"
+  : "http://localhost:3000";
 
 const hiddenImage = BASE_URL + "/src/assets/spengbab.jpg";
 
