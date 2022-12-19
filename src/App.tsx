@@ -4,19 +4,25 @@ import { Canvas } from "./Canvas";
 
 const styledId = "styledImage";
 
-const BASE_URL = import.meta.env.PROD
-  ? "https://joelisk.github.io/solid-tensorflow-app"
-  : "http://localhost:3000";
+// const BASE_URL = import.meta.env.PROD
+//   ? "https://joelisk.github.io/solid-tensorflow-app"
+//   : "http://localhost:3000";
 
-const hiddenImage = BASE_URL + "/src/assets/spengbab.jpg";
+import hiddenImage from "./assets/spengbab.jpg";
+import img1 from "./assets/Golden_Gate_Bridge_from_Battery_Spencer.jpg";
+import img2 from "./assets/The_Great_Wave_off_Kanagawa.jpg";
+import img3 from "./assets/Tuebingen_Neckarfront.jpg";
+import img4 from "/src/assets/Untitled_(Still_life)_(1913)_-_Amadeo_Souza-Cardoso_(1887-1918)_(17385824283).jpg";
 
-const imgUrlArr = [
-  BASE_URL + "/src/assets/Golden_Gate_Bridge_from_Battery_Spencer.jpg",
-  BASE_URL + "/src/assets/The_Great_Wave_off_Kanagawa.jpg",
-  BASE_URL + "/src/assets/Tuebingen_Neckarfront.jpg",
-  BASE_URL +
-    "/src/assets/Untitled_(Still_life)_(1913)_-_Amadeo_Souza-Cardoso_(1887-1918)_(17385824283).jpg",
-];
+const imgUrlArr = [img1, img2, img3, img4];
+
+// const imgUrlArr = [
+//   BASE_URL + "/src/assets/Golden_Gate_Bridge_from_Battery_Spencer.jpg",
+//   BASE_URL + "/src/assets/The_Great_Wave_off_Kanagawa.jpg",
+//   BASE_URL + "/src/assets/Tuebingen_Neckarfront.jpg",
+//   BASE_URL +
+//     "/src/assets/Untitled_(Still_life)_(1913)_-_Amadeo_Souza-Cardoso_(1887-1918)_(17385824283).jpg",
+// ];
 
 // for some reason if we don't have the hiddenImage in the
 // app, tf.browser.toPixels() just displays a gray screen

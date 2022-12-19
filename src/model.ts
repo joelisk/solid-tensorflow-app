@@ -3,7 +3,7 @@ import { getCanvas } from "./Canvas";
 
 const BASE_URL = import.meta.env.PROD
   ? "https://joelisk.github.io/solid-tensorflow-app"
-  : "http://localhost:3000";
+  : "http://localhost:3000/solid-tensorflow-app";
 
 const modelURL = BASE_URL + "/src/models/model.json";
 
