@@ -55,9 +55,6 @@ const changeRImage = (imgIdx: number) => {
 
 //TODO: make the styling look good
 //TODO: button working, have 3-4 styleImages in a sidebar to choose from
-//TODO: button working, have an <input> to upload image - nah, we'll do it with full stack app
-//TODO: finally, have button to download image - maybe save for full stack
-//TODO: option to share on social media? - maybe save for full stack
 
 const App: Component = () => {
   return (
@@ -66,7 +63,7 @@ const App: Component = () => {
       <header class="pr-2 pl-24 py-0 font-sans text-2xl text-violet-100 bg-gradient-to-b from-indigo-500 to-fuchsia-500">
         <div>
           <div class="px-4 py-2 container bg-gray-800">
-            <div class="flex justify-center py-6">Art Style Transfer!</div>
+            <div class="flex justify-center py-8">Art Style Transfer!</div>
             {/* Thumbnails & Main Images */}
             <div class="pb-6 columns-2 flex justify-evenly">
               <div class="text-sm">
@@ -74,7 +71,12 @@ const App: Component = () => {
                 <Sidebar imgChange={changeLImage} />
               </div>
               <div>
-                <img src={image()} width={500} height={500} />
+                <img
+                  class="rounded-lg transform transition duration-500 hover:scale-110"
+                  src={image()}
+                  width={500}
+                  height={500}
+                />
               </div>
             </div>
             <div class="pb-6 columns-2 flex justify-evenly">
@@ -83,7 +85,12 @@ const App: Component = () => {
                 <Sidebar imgChange={changeRImage} />
               </div>
               <div>
-                <img src={styleImage()} width={500} height={500} />
+                <img
+                  class="rounded-lg transform transition duration-500 hover:scale-110"
+                  src={styleImage()}
+                  width={500}
+                  height={500}
+                />
               </div>
             </div>
             <div class="invisible">
@@ -98,30 +105,42 @@ const App: Component = () => {
                 Generate Image!
               </button>
             </div>
-            {modelFailure() ? (
-              <ModelFailError />
-            ) : (
-              <div class="w-96 pt-4 bg-gray-900 flex flex-col justify-center">
-                {buttonPressed() && !canvasDisplayed() ? <p>Loading...</p> : ""}
-                {canvasDisplayed() ? (
+            <div
+              class={`ml-[26rem] mr-[26rem] h-[22rem] mt-8 pt-4 flex justify-center ${
+                buttonPressed() ? "lg:bg-gray-900" : ""
+              }`}
+            >
+              {modelFailure() ? (
+                <ModelFailError />
+              ) : (
+                <div>
+                  {buttonPressed() && !canvasDisplayed() ? (
+                    <div class="flex justify-center">
+                      <p>Loading...</p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {canvasDisplayed() ? (
+                    <div class="pb-2 flex justify-center">
+                      <p> you have failed the vibe check. </p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <div class="flex justify-center">
-                    <p> you have failed the vibe check. </p>
+                    <Canvas id={styledId} />
                   </div>
-                ) : (
-                  ""
-                )}
-                <div class="flex justify-center">
-                  <Canvas id={styledId} />
+                  {canvasDisplayed() ? (
+                    <div class="pb-2 flex justify-center">
+                      <p> he comes. </p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-                {canvasDisplayed() ? (
-                  <div class="flex justify-center">
-                    <p> he comes. </p>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </header>
