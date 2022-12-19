@@ -1,23 +1,9 @@
-//const tf = require('@tensorflow/tfjs');
 import * as tf from "@tensorflow/tfjs";
 import { getCanvas } from "./Canvas";
 
-// TODO: how to use tensorflowjs without massive memory leaks:
-// https://levelup.gitconnected.com/how-to-use-tensorflow-js-without-memory-leaks-273ad16196be
-// backend_webgl.ts:1211 High memory usage in GPU: 2614.45 MB, most likely due to a memory leak
+const BASE_URL = import.meta.env.DEV ? "http://localhost:3000" : ""; // wherever we deploy
 
-// Optional Load the binding:
-// Use '@tensorflow/tfjs-node-gpu' if running with GPU.
-// @tensorflw/tfjs-node causes errors or aws-sdk, aws-s3, nock - I think this is specifically for backend
-// require('@tensorflow/tfjs-node');
-
-// console.log(import.meta.env) // solid.js equivalent of process env
-// console.log(import.meta.url)
-// if we deploy this we'll need to change the url most likely
-// TODO: do a check for import.meta.env.DEV || import.meta.env.PROD
-// and set environment variables for the URL based on where we deploy
-// if in dev or deployed to Heroku, Github pages, etc...
-const modelURL = "http://localhost:3000/src/models/model.json";
+const modelURL = BASE_URL + "/src/models/model.json";
 
 const getStyledImage = async (
   styleImgURL: string,
@@ -30,11 +16,9 @@ const getStyledImage = async (
 
   const image = new Image(240, 258); // need image size small or will crash
   image.src = imgURL;
-  //image.onload = () => tf.browser.fromPixels(image);
 
   const styleImage = new Image(250, 250);
   styleImage.src = styleImgURL;
-  //styleImage.onload = () => tf.browser.fromPixels(image);
 
   const imageTensor = preprocess(image);
   const styleImageTensor = preprocess(styleImage);

@@ -2,17 +2,18 @@ import { Component, createSignal, createEffect } from "solid-js";
 import getStyledImage from "./model";
 import { Canvas } from "./Canvas";
 
-// will change if we deploy to Heroku, Github pages, etc...
-// const image = "http://localhost:3000/src/assets/image.jpg"
-// maybe have an env file + global constants
 const styledId = "styledImage";
 
-// for more chaos, could have a different hiddenImage associated with every styleImage
-const hiddenImage = "http://localhost:3000/src/assets/spengbab.jpg";
+const BASE_URL = import.meta.env.DEV ? "http://localhost:3000" : ""; // wherever we deploy
+
+const hiddenImage = BASE_URL + "/src/assets/spengbab.jpg";
 
 const imgUrlArr = [
-  "http://localhost:3000/src/assets/image.jpg",
-  "http://localhost:3000/src/assets/style_transfer_image.jpg",
+  BASE_URL + "/src/assets/Golden_Gate_Bridge_from_Battery_Spencer.jpg",
+  BASE_URL + "/src/assets/The_Great_Wave_off_Kanagawa.jpg",
+  BASE_URL + "/src/assets/Tuebingen_Neckarfront.jpg",
+  BASE_URL +
+    "/src/assets/Untitled_(Still_life)_(1913)_-_Amadeo_Souza-Cardoso_(1887-1918)_(17385824283).jpg",
 ];
 
 // for some reason if we don't have the hiddenImage in the
@@ -53,8 +54,6 @@ const changeStyleImage = (imgIdx: number) => {
   setStyleImage(imgUrlArr[imgIdx]);
 };
 
-//TODO: button working, have 3-4 styleImages in a sidebar to choose from
-
 const App: Component = () => {
   return (
     <div>
@@ -68,7 +67,7 @@ const App: Component = () => {
                 Choose your target image!
                 <Sidebar imgChange={changeTgtImage} />
               </div>
-              <div>
+              <div class="pt-5">
                 <img
                   class="rounded-lg transform transition duration-500 hover:scale-110"
                   src={image()}
@@ -82,7 +81,7 @@ const App: Component = () => {
                 Choose your style image!
                 <Sidebar imgChange={changeStyleImage} />
               </div>
-              <div>
+              <div class="pt-5">
                 <img
                   class="rounded-lg transform transition duration-500 hover:scale-110"
                   src={styleImage()}
@@ -157,7 +156,7 @@ const Sidebar: Component<{ imgChange: Function }> = (props) => {
                 onClick={() => props.imgChange(index)}
                 class="hover:bg-gray-100/5 flex flex-row justify-end"
               >
-                <img src={value} width={100} height={100} />
+                <img class="rounded" src={value} width={100} height={100} />
               </li>
             );
           })}
@@ -177,5 +176,3 @@ const ModelFailError: Component = () => {
 };
 
 export default App;
-
-// npm run dev
