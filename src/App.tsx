@@ -63,94 +63,103 @@ const changeStyleImage = (imgIdx: number) => {
 };
 
 const App: Component = () => {
-  return (
-    <div>
-      <header class="pr-2 pl-24 py-0 font-sans text-2xl text-violet-100 bg-gradient-to-b from-indigo-500 to-fuchsia-500">
-        <div>
-          <div class="px-4 py-2 container bg-gray-800">
-            <div class="flex justify-center py-8">Art Style Transfer!</div>
-            {/* Thumbnails & Main Images */}
-            <div class="pb-6 columns-2 flex justify-evenly">
-              <div class="text-sm">
-                Choose your target image!
-                <Sidebar imgChange={changeTgtImage} />
-              </div>
-              <div class="pt-5">
-                <img
-                  class="rounded-lg transform transition duration-500 hover:scale-110"
-                  src={image()}
-                  width={500}
-                  height={500}
-                />
-              </div>
-            </div>
-            <div class="pb-6 columns-2 flex justify-evenly">
-              <div class="text-sm">
-                Choose your style image!
-                <Sidebar imgChange={changeStyleImage} />
-              </div>
-              <div class="pt-5">
-                <img
-                  class="rounded-lg transform transition duration-500 hover:scale-110"
-                  src={styleImage()}
-                  width={500}
-                  height={500}
-                />
-              </div>
-            </div>
-            <div class="invisible">
-              <img src={hiddenImage} width={5} height={5} />
-            </div>
-            {/* Bottom */}
-            <div class="pt-6 pb-6 flex justify-center">
-              <button
-                class="p-4 rounded-md border-radius bg-gray-900 hover:border-2 hover:border-white hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300"
-                onClick={() => styledImage(styledId)}
-              >
-                Generate Image!
-              </button>
-            </div>
-            <div
-              class={`ml-[26rem] mr-[26rem] h-[22rem] mt-8 pt-4 flex justify-center ${
-                buttonPressed() ? "lg:bg-gray-900" : ""
-              }`}
-            >
-              {modelFailure() ? (
-                <ModelFailError />
-              ) : (
-                <div>
-                  {buttonPressed() && !canvasDisplayed() ? (
-                    <div class="flex justify-center">
-                      <p>Loading...</p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {canvasDisplayed() ? (
-                    <div class="pb-2 flex justify-center">
-                      <p> you have failed the vibe check. </p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  <div class="flex justify-center">
-                    <Canvas id={styledId} />
-                  </div>
-                  {canvasDisplayed() ? (
-                    <div class="pb-2 flex justify-center">
-                      <p> he comes. </p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+  // app will crash mobile
+  if (detectMob()) {
+    return (
+      <div class="text-violet-100">
+        Sorry, app is currently not working on mobile.
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <header class="pr-2 pl-24 py-0 font-sans text-2xl text-violet-100 bg-gradient-to-b from-indigo-500 to-fuchsia-500">
+          <div>
+            <div class="px-4 py-2 container bg-gray-800">
+              <div class="flex justify-center py-8">Art Style Transfer!</div>
+              {/* Thumbnails & Main Images */}
+              <div class="pb-6 columns-2 flex justify-evenly">
+                <div class="text-sm">
+                  Choose your target image!
+                  <Sidebar imgChange={changeTgtImage} />
                 </div>
-              )}
+                <div class="pt-5">
+                  <img
+                    class="rounded-lg transform transition duration-500 hover:scale-110"
+                    src={image()}
+                    width={500}
+                    height={500}
+                  />
+                </div>
+              </div>
+              <div class="pb-6 columns-2 flex justify-evenly">
+                <div class="text-sm">
+                  Choose your style image!
+                  <Sidebar imgChange={changeStyleImage} />
+                </div>
+                <div class="pt-5">
+                  <img
+                    class="rounded-lg transform transition duration-500 hover:scale-110"
+                    src={styleImage()}
+                    width={500}
+                    height={500}
+                  />
+                </div>
+              </div>
+              <div class="invisible">
+                <img src={hiddenImage} width={5} height={5} />
+              </div>
+              {/* Bottom */}
+              <div class="pt-6 pb-6 flex justify-center">
+                <button
+                  class="p-4 rounded-md border-radius bg-gray-900 hover:border-2 hover:border-white hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-300"
+                  onClick={() => styledImage(styledId)}
+                >
+                  Generate Image!
+                </button>
+              </div>
+              <div
+                class={`ml-[26rem] mr-[26rem] h-[22rem] mt-8 pt-4 flex justify-center ${
+                  buttonPressed() ? "lg:bg-gray-900" : ""
+                }`}
+              >
+                {modelFailure() ? (
+                  <ModelFailError />
+                ) : (
+                  <div>
+                    {buttonPressed() && !canvasDisplayed() ? (
+                      <div class="flex justify-center">
+                        <p>Loading...</p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {canvasDisplayed() ? (
+                      <div class="pb-2 flex justify-center">
+                        <p> you have failed the vibe check. </p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    <div class="flex justify-center">
+                      <Canvas id={styledId} />
+                    </div>
+                    {canvasDisplayed() ? (
+                      <div class="pb-2 flex justify-center">
+                        <p> he comes. </p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
-    </div>
-  );
+        </header>
+      </div>
+    );
+  }
 };
 
 const Sidebar: Component<{ imgChange: Function }> = (props) => {
@@ -184,3 +193,21 @@ const ModelFailError: Component = () => {
 };
 
 export default App;
+
+// quick check for mobile. TensorFlow.js currently
+// crashing on mobile browsers
+function detectMob() {
+  const toMatch = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i,
+  ];
+
+  return toMatch.some((toMatchItem) => {
+    return navigator.userAgent.match(toMatchItem);
+  });
+}
