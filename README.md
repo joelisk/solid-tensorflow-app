@@ -1,3 +1,7 @@
+# Check out the deployed version here:
+
+- https://joelisk.github.io/tensorflow-solid-app
+
 # Art Style Transfer model with Tensorflow.js, Solid.js, TypeScript, Tailwind CSS
 
 - inspired by: https://www.youtube.com/watch?v=dMq4nAMuqO8
