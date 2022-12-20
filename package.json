@@ -8,7 +8,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d deploy.sh",
     "dev": "vite",
-    "build": "vite build --base=./solid-tensorflow-app",
+    "build": "vite build",
     "serve": "vite preview"
   },
   "license": "MIT",
