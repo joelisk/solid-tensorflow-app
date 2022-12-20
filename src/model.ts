@@ -1,11 +1,11 @@
 import * as tf from "@tensorflow/tfjs";
 import { getCanvas } from "./Canvas";
 
-const BASE_URL = import.meta.env.PROD
-  ? "https://joelisk.github.io/solid-tensorflow-app"
-  : "http://localhost:3000/solid-tensorflow-app";
+const modelURL = import.meta.env.PROD
+  ? "https://raw.githubusercontent.com/JoeLisk/tfjs-fast-style-transfer/main/model.json"
+  : "http://localhost:3000/solid-tensorflow-app/src/models/model.json";
 
-const modelURL = BASE_URL + "/src/models/model.json";
+//const modelURL = BASE_URL + "/src/models/model.json";
 
 const getStyledImage = async (
   styleImgURL: string,
