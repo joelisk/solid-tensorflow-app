@@ -1,7 +1,9 @@
+<!--
 # Check out the deployed version [here](https://joelisk.github.io/solid-tensorflow-app/):
 
 - runs well on desktop, currently running the TF model crashes on mobile
 - currently haven't tested on tablet
+-->
 
 # Art Style Transfer model with Tensorflow.js, Solid.js, TypeScript, Tailwind CSS
 
