@@ -8,7 +8,6 @@ const styledId = "styledImage";
 //   ? "https://joelisk.github.io/solid-tensorflow-app"
 //   : "http://localhost:3000";
 
-import hiddenImage from "./assets/spengbab.jpg";
 import img1 from "./assets/Golden_Gate_Bridge_from_Battery_Spencer.jpg";
 import img2 from "./assets/The_Great_Wave_off_Kanagawa.jpg";
 import img3 from "./assets/Tuebingen_Neckarfront.jpg";
@@ -24,11 +23,6 @@ const imgUrlArr = [img1, img2, img3, img4];
 //     "/src/assets/Untitled_(Still_life)_(1913)_-_Amadeo_Souza-Cardoso_(1887-1918)_(17385824283).jpg",
 // ];
 
-// for some reason if we don't have the hiddenImage in the
-// app, tf.browser.toPixels() just displays a gray screen
-// so we need to have the image in the App Component
-// but set the display to 'hidden'
-
 const [canvasDisplayed, setCanvasDisplayed] = createSignal(false);
 const [buttonPressed, setButtonPressed] = createSignal(false);
 const [image, setImage] = createSignal(imgUrlArr[0]);
@@ -41,7 +35,7 @@ const styledImage = async (id: string) => {
     // model fails ~20% of the time. let's be safe
     // also we should make sure to free up memory
     // by disposing of unneeded tensors
-    await getStyledImage(styleImage(), hiddenImage, id).then((result) => {
+    await getStyledImage(styleImage(), image(), id).then((result) => {
       console.log(result);
     });
 
@@ -106,9 +100,6 @@ const App: Component = () => {
                   />
                 </div>
               </div>
-              <div class="invisible">
-                <img src={hiddenImage} width={5} height={5} />
-              </div>
               {/* Bottom */}
               <div class="pt-6 pb-6 flex justify-center">
                 <button
@@ -119,9 +110,7 @@ const App: Component = () => {
                 </button>
               </div>
               <div
-                class={`ml-[26rem] mr-[26rem] h-[22rem] mt-8 pt-4 flex justify-center ${
-                  buttonPressed() ? "lg:bg-gray-900" : ""
-                }`}
+                class={`ml-[26rem] mr-[26rem] h-[22rem] mt-8 pt-4 flex justify-center`}
               >
                 {modelFailure() ? (
                   <ModelFailError />
@@ -134,23 +123,9 @@ const App: Component = () => {
                     ) : (
                       ""
                     )}
-                    {canvasDisplayed() ? (
-                      <div class="pb-2 flex justify-center">
-                        <p> you have failed the vibe check. </p>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                     <div class="flex justify-center">
                       <Canvas id={styledId} />
                     </div>
-                    {canvasDisplayed() ? (
-                      <div class="pb-2 flex justify-center">
-                        <p> he comes. </p>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 )}
               </div>
